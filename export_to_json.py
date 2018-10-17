@@ -15,6 +15,9 @@ if len(sys.argv) != 2:
     exit(1)
 
 all_trades = get_trades()
+# Strip API returns fields that are not trades (grrrr)
+for key in ["success", "method"]: del all_trades[key]
+all_trades = list(all_trades.values())
 
 with open(sys.argv[1], 'w') as output_file:
     json.dump(all_trades, output_file, indent=4)

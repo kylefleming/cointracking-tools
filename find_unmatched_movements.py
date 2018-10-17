@@ -11,7 +11,7 @@ from tools import prettify, read_trades_from_file, convert_trade_objs
 
 
 if len(sys.argv) != 2:
-    print("Usage: {} <json_file>".format(sys.argv[0]))
+    print("Usage: {} <json_or_csv_file>".format(sys.argv[0]))
     exit(1)
 
 all_trades = read_trades_from_file(sys.argv[1])
@@ -80,8 +80,8 @@ for i in range(0, len(trade_objs)):
     if len(finds) > 2:
         print("Found too many matches for the movement.")
         print("Check for duplicates!")
-        # for found in finds:
-        #     print(prettify(found.to_odict()))
+        for found in finds:
+            print(prettify(found.to_odict()))
         # num_unmatched += 1
 
 print("Checked {} transactions.".format(len(trade_objs)))

@@ -1,0 +1,15 @@
+pipenv shell
+
+COINTRACKING_API_KEY=YOUR_API_KEY COINTRACKING_API_SECRET=YOUR_API_SECRET python export_to_json.py data/saved.json > logs/save.log
+
+python combine.py data/CoinTrackingTradeList.csv data/saved.json data/combined.json > logs/combine.log
+
+python find_unmatched_movements.py data/saved.json > logs/unmatched.log
+python find_unmatched_movements.py data/combined.json > logs/unmatched.log
+
+python find_duplicates.py data/saved.json > logs/duplicates.log
+python find_duplicates.py data/combined.json > logs/duplicates.log
+
+mv /Users/kyle/Downloads/CoinTracking\ ·\ Trade\ List.csv data/CoinTrackingTradeList.csv && sed -i '1s/^\xEF\xBB\xBF//' data/CoinTrackingTradeList.csv && sed -i '1s/"Type","Buy","Cur.","Buy value in USD","Sell","Cur.","Sell value in USD","Fee","Cur.","Exchange","Imported From","Trade Group","Comment","Trade ID","Add Date","Trade Date"/"type","buy_amount","buy_currency","buy_value_usd","sell_amount","sell_currency","sell_value_usd","fee_amount","fee_currency","exchange","imported_from","group","comment","trade_id","imported_time","time"/' data/CoinTrackingTradeList.csv && COINTRACKING_API_KEY=YOUR_API_KEY COINTRACKING_API_SECRET=YOUR_API_SECRET python export_to_json.py data/saved.json > logs/save.log && python combine.py data/CoinTrackingTradeList.csv data/saved.json data/combined.json > logs/combine.log
+
+python generate_tax_report.py data/combined.json data/tax_report.json > logs/tax_report.log

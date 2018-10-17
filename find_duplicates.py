@@ -15,7 +15,7 @@ from tools import prettify, read_trades_from_file, convert_trade_objs
 
 
 if len(sys.argv) != 2:
-    print("Usage: {} <json_file>".format(sys.argv[0]))
+    print("Usage: {} <json_or_csv_file>".format(sys.argv[0]))
     exit(1)
 
 all_trades = read_trades_from_file(sys.argv[1])
